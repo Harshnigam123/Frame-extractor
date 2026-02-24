@@ -1,13 +1,15 @@
-const admin = require("firebase-admin");
+const admin = require('firebase-admin');
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_KEY)),
-    storageBucket: process.env.FIREBASE_BUCKET,
-  });
-}
+const serviceAccount = JSON.parse(process.env.FIREBASE_KEY);
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+
+  // VERY IMPORTANT ↓↓↓
+  storageBucket: process.env.FIREBASE_BUCKET,
+});
 
 const db = admin.firestore();
-const bucket = admin.storage().bucket();
+const bucket = admin.storage().bucket(); // uses bucket from above
 
 module.exports = { admin, db, bucket };
