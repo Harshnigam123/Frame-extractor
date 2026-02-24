@@ -16,6 +16,8 @@ async function downloadVideo(url, outputPath) {
   output: outputPath,
 
   cookies: '/etc/secrets/cookies.txt',
+  noWriteCookies: true,   // ⭐⭐⭐ VERY IMPORTANT
+
   noPlaylist: true,
 
   addHeader: [
