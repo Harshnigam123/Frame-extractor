@@ -1,5 +1,8 @@
 const express = require('express');
-const { admin, db, bucket } = require('../config/firebase');
+const firebase = require('../config/firebase');
+const admin = firebase.admin;
+const db = firebase.db;
+const bucket = firebase.bucket;
 const archiver = require('archiver');
 const path = require('path');
 
@@ -13,7 +16,12 @@ router.get('/', async (req, res) => {
       Math.max(1, parseInt(req.query.limit, 10) || 20)
     );
 
-    const snap = await db
+    if (!db) {
+  console.error("Firestore DB not initialized");
+  return res.status(500).json({ error: "Database not initialized" });
+}
+
+const snap = await db
       .collection('extractions')
       .orderBy('createdAt', 'desc')
       .limit(limit)
