@@ -12,14 +12,19 @@ console.log("=== COOKIE DEBUG END ===");
 async function downloadVideo(url, outputPath) {
   try {
     await ytDlp(url, {
-      format: "bestvideo[height<=720]+bestaudio/best[height<=720]",
-      output: outputPath,
+  format: "bestvideo[height<=720]+bestaudio/best[height<=720]",
+  output: outputPath,
+  cookies: "/etc/secrets/cookies.txt",
+  noPlaylist: true,
 
-      // ✅ correct cookies flag
-      cookies: "/etc/secrets/cookies.txt",
-
-      noPlaylist: true,
-    });
+  // 🔥 Anti-bot fixes (ADD THESE LINES)
+  addHeader: [
+    "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+    "Accept-Language: en-US,en;q=0.9"
+  ],
+  extractorArgs: "youtube:player_client=android",
+  geoBypass: true,
+});
 
     console.log("Download completed");
   } catch (err) {
