@@ -4,12 +4,10 @@ const serviceAccount = JSON.parse(process.env.FIREBASE_KEY);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-
-  // VERY IMPORTANT ↓↓↓
-  storageBucket: process.env.FIREBASE_BUCKET,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET, // ← FIXED
 });
 
 const db = admin.firestore();
-const bucket = admin.storage().bucket(); // uses bucket from above
+const bucket = admin.storage().bucket();
 
 module.exports = { admin, db, bucket };
