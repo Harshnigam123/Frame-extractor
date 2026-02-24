@@ -17,13 +17,17 @@ async function downloadVideo(url, outputPath) {
   cookies: "/etc/secrets/cookies.txt",
   noPlaylist: true,
 
-  // 🔥 Anti-bot fixes (ADD THESE LINES)
   addHeader: [
     "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-    "Accept-Language: en-US,en;q=0.9"
+    "Accept-Language: en-US,en;q=0.9",
   ],
+
   extractorArgs: "youtube:player_client=android",
   geoBypass: true,
+
+  sleepRequests: 5,
+  retries: 3,
+  fragmentRetries: 3,
 });
 
     console.log("Download completed");
