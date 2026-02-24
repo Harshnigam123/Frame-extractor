@@ -15,6 +15,7 @@ async function downloadVideo(url, outputPath) {
   format: "bestvideo[height<=720]+bestaudio/best[height<=720]",
   output: outputPath,
   cookies: "/etc/secrets/cookies.txt",
+noCookies: true,
   noPlaylist: true,
 
   addHeader: [
