@@ -1,14 +1,15 @@
-const admin = require("firebase-admin");
-const serviceAccount = require("../firebaseKey.json");
+const admin = require('firebase-admin');
+
+if (!process.env.FIREBASE_KEY) {
+  throw new Error("FIREBASE_KEY environment variable is missing");
+}
+
+// Convert ENV string → JSON object
+const serviceAccount = JSON.parse(process.env.FIREBASE_KEY);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-
-  // 🔴 IMPORTANT: Use your real bucket name
-  storageBucket: "frame-extractor-97663.firebasestorage.app",
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET, // optional but recommended
 });
 
-const db = admin.firestore();
-const bucket = admin.storage().bucket();
-
-module.exports = { admin, db, bucket };
+module.exports = admin;
